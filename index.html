@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bay Creative - Trusted Designs & Digital Marketing Strategies - Established 2026 </title>
+    <title>The Bay Creative - Trusted Designs & Digital Marketing Strategies - Established 2026</title>
     <style>
         * {
             margin: 0;
@@ -103,8 +103,8 @@
         }
 
         #ggb-canvas {
-            max-width: 90%;
-            max-height: 90%;
+            width: 100%;
+            height: 100%;
             display: block;
         }
 
@@ -157,7 +157,7 @@
             color: rgb(71, 85, 105);
         }
 
-        /* ===== CONTENT SECTIONS (on top of background) ===== */
+        /* ===== CONTENT SECTIONS ===== */
         section {
             width: 100%;
             position: relative;
@@ -298,6 +298,7 @@
             width: 3rem;
             height: 1px;
             background: rgb(203, 213, 225);
+            margin-bottom: 1rem;
         }
 
         .section-subtitle {
@@ -449,12 +450,13 @@
         }
 
         .hidden-details {
-            max-height: 0;
+            max-height: 1000px;
             overflow: hidden;
             transition: max-height 0.3s ease;
         }
 
         .hidden-details.hidden {
+            max-height: 0;
             display: none;
         }
 
@@ -492,6 +494,9 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.9rem;
+            background: none;
+            padding: 0;
+            color: rgb(15, 23, 42);
         }
 
         .portfolio-toggle svg {
@@ -962,13 +967,27 @@ function renderPortfolio() {
 renderPortfolio();
 
 // ============================================
-// GOLDEN GATE BRIDGE CANVAS
+// GOLDEN GATE BRIDGE CANVAS ANIMATION
 // ============================================
-function drawGoldenGateBridge(canvas, progress = 0) {
+const canvas = document.getElementById('ggb-canvas');
+let progress = 0;
+
+function resizeCanvas() {
+    if (canvas) {
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+    }
+}
+
+function drawGoldenGateBridge() {
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
     
+    // Clear Canvas
+    ctx.clearRect(0, 0, width, height);
+
     // Sky gradient
     const skyGradient = ctx.createLinearGradient(0, 0, 0, height);
     skyGradient.addColorStop(0, '#87CEEB');
@@ -976,186 +995,88 @@ function drawGoldenGateBridge(canvas, progress = 0) {
     ctx.fillStyle = skyGradient;
     ctx.fillRect(0, 0, width, height);
     
-    // Water with waves
+    // Water with animated waves
     ctx.fillStyle = '#1E90FF';
     ctx.beginPath();
     ctx.moveTo(0, height * 0.65);
-    for (let i = 0; i < width; i += 5) {
-        const waveY = height * 0.65 + Math.sin((i * 0.01) + progress) * 8;
+    for (let i = 0; i <= width; i += 10) {
+        const waveY = height * 0.65 + Math.sin((i * 0.01) + progress) * 6;
         ctx.lineTo(i, waveY);
     }
     ctx.lineTo(width, height);
     ctx.lineTo(0, height);
     ctx.fill();
     
-    // Bridge structure
-    const tower1X = width * 0.25;
-    const tower2X = width * 0.75;
-    const towerHeight = height * 0.35;
+    // Bridge dimensions
+    const tower1X = width * 0.3;
+    const tower2X = width * 0.7;
+    const towerHeight = height * 0.25;
+    const deckY = height * 0.6;
     
     // Cables
-    ctx.strokeStyle = 'rgba(200, 100, 50, 0.7)';
+    ctx.strokeStyle = '#C84127';
     ctx.lineWidth = 3;
     
+    // Main Suspension Cable Left-to-Right
     ctx.beginPath();
-    ctx.moveTo(0, height * 0.6);
-    ctx.quadraticCurveTo(tower1X, towerHeight - 20, width, height * 0.6);
+    ctx.moveTo(0, deckY - 10);
+    ctx.quadraticCurveTo(tower1X / 2, deckY - 80, tower1X, towerHeight);
+    ctx.quadraticCurveTo((tower1X + tower2X) / 2, deckY + 40, tower2X, towerHeight);
+    ctx.quadraticCurveTo((tower2X + width) / 2, deckY - 80, width, deckY - 10);
     ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(0, height * 0.6);
-    ctx.quadraticCurveTo(tower2X, towerHeight - 20, width, height * 0.6);
-    ctx.stroke();
-    
-    // Deck
-    ctx.fillStyle = 'rgba(200, 100, 50, 0.8)';
-    ctx.fillRect(0, height * 0.6, width, 15);
-    
-    // Towers
-    ctx.fillStyle = 'rgba(200, 100, 50, 0.9)';
-    ctx.fillRect(tower1X - 8, towerHeight, 16, height * 0.25);
-    ctx.fillRect(tower2X - 8, towerHeight, 16, height * 0.25);
-    
-    // Tower peaks
-    ctx.fillStyle = 'rgba(220, 120, 70, 1)';
-    ctx.beginPath();
-    ctx.moveTo(tower1X, towerHeight - 30);
-    ctx.lineTo(tower1X - 12, towerHeight);
-    ctx.lineTo(tower1X + 12, towerHeight);
-    ctx.fill();
-    
-    ctx.beginPath();
-    ctx.moveTo(tower2X, towerHeight - 30);
-    ctx.lineTo(tower2X - 12, towerHeight);
-    ctx.lineTo(tower2X + 12, towerHeight);
-    ctx.fill();
-    
-    // Suspension cables
-    ctx.strokeStyle = 'rgba(180, 80, 40, 0.5)';
-    ctx.lineWidth = 2;
-    for (let i = 0; i < width; i += 30) {
+
+    // Vertical suspender cables
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(200, 65, 39, 0.4)';
+    for (let x = 0; x < width; x += 25) {
         ctx.beginPath();
-        ctx.moveTo(i, height * 0.55);
-        ctx.lineTo(i, height * 0.63);
+        ctx.moveTo(x, deckY);
+        // Approximate cable curve height
+        let cableY = deckY;
+        if (x < tower1X) {
+            cableY = towerHeight + Math.pow((x - tower1X) / (tower1X), 2) * (deckY - tower1X);
+        } else if (x <= tower2X) {
+            const mid = (tower1X + tower2X) / 2;
+            cableY = deckY + 30 - Math.pow((x - mid) / ((tower2X - tower1X) / 2), 2) * (deckY + 30 - towerHeight);
+        } else {
+            cableY = towerHeight + Math.pow((x - tower2X) / (width - tower2X), 2) * (deckY - tower2X);
+        }
+        ctx.lineTo(x, cableY);
         ctx.stroke();
     }
-}
-
-function animateBridge() {
-    const canvas = document.getElementById('ggb-canvas');
-    if (!canvas) return;
     
-    canvas.width = Math.min(800, window.innerWidth * 0.9);
-    canvas.height = canvas.width * 0.75;
+    // Roadway Deck
+    ctx.fillStyle = '#A3331D';
+    ctx.fillRect(0, deckY, width, 12);
     
-    let progress = 0;
-    function animate() {
-        progress += 0.02;
-        drawGoldenGateBridge(canvas, progress);
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// ============================================
-// BACKGROUND IMAGE LOADING
-// ============================================
-const backgroundImages = [
-   const backgroundImages = [
-    {
-        id: 'bg-sf-1',
-        urls: [
-            './Images/br2.jpg',
-            'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1400&h=700&fit=crop'
-        ],
-        name: 'San Francisco Golden Gate'
-    },
-    {
-        id: 'bg-sf-2',
-        urls: [
-            'https://images.unsplash.com/photo-1530474409940-b632073bd3cd?w=1400&h=700&fit=crop',
-            'https://images.unsplash.com/photo-1462226185464-4a424f9fa280?w=1400&h=700&fit=crop'
-        ],
-        name: 'San Francisco Skyline'
-    },
-    {
-        id: 'bg-sj-1',
-        urls: [
-            'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1400&h=700&fit=crop',
-            'https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=1400&h=700&fit=crop'
-        ],
-        name: 'San Jose Downtown'
-    },
-    {
-        id: 'bg-sj-2',
-        urls: [
-            'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1400&h=700&fit=crop',
-            'https://images.unsplash.com/photo-1500595046891-02a37fb4dcc4?w=1400&h=700&fit=crop'
-        ],
-        name: 'Bay Area Sunset'
-    }
-];
-
-async function initializeBackgrounds() {
-    console.log('🎨 Initializing backgrounds...');
-    for (const bg of backgroundImages) {
-        const randomUrl = bg.urls[Math.floor(Math.random() * bg.urls.length)];
-        const element = document.getElementById(bg.id);
-        if (element) {
-            element.style.backgroundImage = `url('${randomUrl}')`;
-            console.log(`📦 Loaded: ${bg.id}`);
-        }
-    }
-    console.log('✅ Done!');
-}
-
-// ============================================
-// SCROLL BACKGROUND CYCLING
-// ============================================
-const bgLayers = ['bg-hero', 'bg-sf-1', 'bg-sf-2', 'bg-sj-1', 'bg-sj-2', 'bg-footer'];
-let currentBgIndex = 0;
-
-function updateBackgroundOnScroll() {
-    const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    const newIndex = Math.round(Math.min(scrollPercent * (bgLayers.length - 1), bgLayers.length - 1));
+    // Towers
+    ctx.fillStyle = '#C84127';
+    ctx.fillRect(tower1X - 10, towerHeight, 20, deckY - towerHeight + 40);
+    ctx.fillRect(tower2X - 10, towerHeight, 20, deckY - towerHeight + 40);
     
-    if (newIndex !== currentBgIndex) {
-        // Remove active from all
-        bgLayers.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.classList.remove('active');
-        });
-        
-        // Add active to new
-        currentBgIndex = newIndex;
-        const el = document.getElementById(bgLayers[currentBgIndex]);
-        if (el) {
-            el.classList.add('active');
-            console.log(`🎨 Background: ${bgLayers[currentBgIndex]}`);
-        }
-    }
+    // Tower peaks
+    ctx.fillStyle = '#E04A2C';
+    ctx.beginPath();
+    ctx.moveTo(tower1X, towerHeight - 15);
+    ctx.lineTo(tower1X - 10, towerHeight);
+    ctx.lineTo(tower1X + 10, towerHeight);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(tower2X, towerHeight - 15);
+    ctx.lineTo(tower2X - 10, towerHeight);
+    ctx.lineTo(tower2X + 10, towerHeight);
+    ctx.closePath();
+    ctx.fill();
+
+    progress += 0.03;
+    requestAnimationFrame(drawGoldenGateBridge);
 }
 
-// ============================================
-// EVENT LISTENERS
-// ============================================
-window.addEventListener('scroll', updateBackgroundOnScroll);
-
-// Initialize
-window.addEventListener('load', () => {
-    animateBridge();
-    initializeBackgrounds();
-});
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        animateBridge();
-        initializeBackgrounds();
-    });
-} else {
-    animateBridge();
-    initializeBackgrounds();
-}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+drawGoldenGateBridge();
 </script>
 
 </body>
