@@ -25,6 +25,45 @@
         .tracking-wide { letter-spacing: 0.05em; }
         .tracking-widest { letter-spacing: 0.1em; }
 
+        /* Background Canvas System */
+        .bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-layer.active {
+            opacity: 1;
+        }
+
+        .ggb-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #ggb-canvas {
+            max-width: 800px;
+            max-height: 600px;
+        }
+
         /* Navigation */
         nav {
             position: fixed;
@@ -83,6 +122,8 @@
             padding-top: 5rem;
             padding-left: 1rem;
             padding-right: 1rem;
+            position: relative;
+            z-index: 10;
         }
 
         .hero-content {
@@ -95,7 +136,7 @@
             display: inline-block;
             margin-bottom: 2rem;
             padding: 0.5rem 0.75rem;
-            background-color: rgb(241, 245, 250);
+            background-color: rgba(241, 245, 250, 0.9);
             font-size: 0.75rem;
             font-weight: 300;
             letter-spacing: 0.1em;
@@ -169,7 +210,10 @@
         /* Sections */
         section {
             width: 100%;
+            position: relative;
+            z-index: 10;
         }
+
         .services-section {
             padding: 6rem 1rem;
             background: white;
@@ -237,61 +281,55 @@
             width: 1.5rem;
             height: 1.5rem;
             color: rgb(15, 23, 42);
-            stroke: currentColor;
-            transition: color 0.3s;
-        }
-
-        .service-card:hover .service-icon svg {
-            color: rgb(5, 150, 105);
         }
 
         .service-title {
-            font-size: 1.25rem;
-            font-weight: 300;
+            font-size: 1.125rem;
+            font-weight: 400;
             margin-bottom: 0.75rem;
-            letter-spacing: -0.015em;
         }
 
         .service-desc {
             color: rgb(71, 85, 105);
-            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
             font-weight: 300;
-            line-height: 1.625;
         }
 
         .service-details {
+            margin-top: 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
         .service-detail-item {
-            font-size: 0.875rem;
-            color: rgb(100, 116, 139);
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            font-size: 0.9rem;
+            color: rgb(71, 85, 105);
             font-weight: 300;
         }
 
         .service-detail-dot {
-            width: 0.375rem;
-            height: 0.375rem;
-            background: rgb(5, 150, 105);
-            border-radius: 9999px;
+            width: 4px;
+            height: 4px;
+            background: rgb(148, 163, 184);
+            border-radius: 50%;
         }
 
         /* Portfolio */
         .portfolio-section {
             padding: 6rem 1rem;
-            background: rgb(248, 250, 252);
+            background: white;
         }
 
         .portfolio-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 3rem;
-            margin-top: 5rem;
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
         @media (min-width: 768px) {
@@ -301,119 +339,103 @@
         }
 
         .portfolio-card {
-            background: white;
             border: 1px solid rgb(226, 232, 240);
+            padding: 2rem;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .portfolio-card:hover {
             border-color: rgb(203, 213, 225);
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        .portfolio-card-content {
-            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .portfolio-header {
             display: flex;
-            align-items: flex-start;
             justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 1.5rem;
         }
-        
 
         .portfolio-title {
             font-size: 1.25rem;
-            font-weight: 300;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.015em;
-            flex: 1;
+            font-weight: 400;
+            margin-bottom: 0.25rem;
         }
 
         .portfolio-url {
+            font-size: 0.85rem;
             color: rgb(100, 116, 139);
-            font-size: 0.875rem;
             font-weight: 300;
         }
 
         .stars {
-            display: flex;
-            gap: 0.125rem;
-            margin-left: 1rem;
-            white-space: nowrap;
+            color: rgb(71, 85, 105);
+            font-size: 0.9rem;
         }
 
         .quote {
-            color: rgb(51, 65, 85);
             font-style: italic;
+            color: rgb(71, 85, 105);
             margin-bottom: 1.5rem;
-            border-left: 1px solid rgb(203, 213, 225);
-            padding-left: 1rem;
             font-weight: 300;
-            line-height: 1.625;
+            line-height: 1.7;
         }
 
         .owner-info {
-            font-size: 0.875rem;
-            color: rgb(71, 85, 105);
-            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: rgb(100, 116, 139);
             font-weight: 300;
         }
 
         .owner-label {
-            color: rgb(15, 23, 42);
             font-weight: 400;
+        }
+
+        .hidden-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .hidden-details.hidden {
+            display: none;
         }
 
         .portfolio-details {
-            border-top: 1px solid rgb(203, 213, 225);
-            padding-top: 1.5rem;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgb(226, 232, 240);
         }
 
         .detail-section {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .detail-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
             font-weight: 400;
+            font-size: 0.9rem;
             color: rgb(71, 85, 105);
             margin-bottom: 0.5rem;
         }
 
         .detail-label.results {
-            color: rgb(5, 150, 105);
+            color: rgb(34, 197, 94);
         }
 
         .detail-text {
-            font-size: 0.875rem;
+            font-size: 0.95rem;
             color: rgb(71, 85, 105);
             font-weight: 300;
-            line-height: 1.625;
+            line-height: 1.6;
         }
 
         .portfolio-toggle {
-            margin-top: 1.5rem;
-            background: none;
-            border: none;
-            color: rgb(15, 23, 42);
-            font-size: 0.875rem;
-            font-weight: 300;
+            margin-top: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            cursor: pointer;
-            padding: 0;
-            transition: gap 0.3s;
-        }
-
-        .portfolio-toggle:hover {
-            gap: 0.75rem;
+            font-size: 0.9rem;
         }
 
         .portfolio-toggle svg {
@@ -422,8 +444,8 @@
             transition: transform 0.3s;
         }
 
-        .hidden-details {
-            display: none;
+        .portfolio-toggle:hover svg {
+            transform: translateX(2px);
         }
 
         /* Process */
@@ -436,7 +458,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 3rem;
-            margin-top: 5rem;
+            margin-top: 3rem;
         }
 
         @media (min-width: 768px) {
@@ -447,34 +469,27 @@
 
         .process-step {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .step-number {
-            width: 3.5rem;
-            height: 3.5rem;
-            min-width: 3.5rem;
-            background: rgb(15, 23, 42);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 9999px;
+            font-size: 2.5rem;
             font-weight: 300;
-            font-size: 0.875rem;
+            color: rgb(226, 232, 240);
+            flex-shrink: 0;
         }
 
         .step-content h3 {
-            font-size: 1.125rem;
-            font-weight: 300;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.015em;
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
         }
 
         .step-content p {
+            font-size: 0.95rem;
             color: rgb(71, 85, 105);
             font-weight: 300;
-            line-height: 1.625;
+            line-height: 1.6;
         }
 
         /* CTA */
@@ -485,30 +500,23 @@
         }
 
         .cta-container {
-            max-width: 56rem;
+            max-width: 800px;
             margin: 0 auto;
             text-align: center;
         }
 
         .cta-h2 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 300;
             margin-bottom: 1.5rem;
             letter-spacing: -0.015em;
         }
 
-        @media (min-width: 768px) {
-            .cta-h2 {
-                font-size: 3.75rem;
-            }
-        }
-
         .cta-p {
-            font-size: 1.125rem;
-            color: rgb(203, 213, 225);
-            margin-bottom: 3rem;
+            font-size: 1rem;
+            color: rgb(209, 213, 219);
+            margin-bottom: 2rem;
             font-weight: 300;
-            line-height: 1.625;
         }
 
         .btn-cta-primary {
@@ -521,7 +529,7 @@
         }
 
         .btn-cta-secondary {
-            border-color: rgb(148, 163, 184);
+            border-color: white;
             color: white;
         }
 
@@ -531,9 +539,9 @@
 
         /* Footer */
         .footer {
-            background: white;
-            border-top: 1px solid rgb(226, 232, 240);
-            padding: 3rem 1rem;
+            background: rgb(17, 24, 39);
+            color: rgb(209, 213, 219);
+            padding: 4rem 1rem 2rem;
         }
 
         .footer-container {
@@ -544,77 +552,82 @@
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgb(55, 65, 81);
+            padding-bottom: 2rem;
         }
 
         .footer-column h4 {
-            font-weight: 300;
+            font-weight: 400;
+            font-size: 1rem;
             margin-bottom: 1rem;
-            letter-spacing: -0.015em;
         }
 
-        .footer-column p,
-        .footer-column a {
-            font-size: 0.875rem;
-            color: rgb(71, 85, 105);
-            text-decoration: none;
+        .footer-column p {
+            font-size: 0.9rem;
+            line-height: 1.6;
             font-weight: 300;
-            line-height: 1.625;
         }
 
-        .footer-column a:hover {
-            color: rgb(15, 23, 42);
+        .footer-heading {
+            color: white;
         }
 
         .footer-links {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
-        .footer-heading {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: rgb(51, 65, 85);
-            font-weight: 400;
+        .footer-links a {
+            color: rgb(209, 213, 219);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 300;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
         }
 
         .footer-bottom {
-            border-top: 1px solid rgb(226, 232, 240);
-            padding-top: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.875rem;
-            color: rgb(100, 116, 139);
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgb(107, 114, 128);
             font-weight: 300;
-            gap: 1rem;
-            flex-direction: column;
         }
 
-        @media (min-width: 768px) {
-            .footer-bottom {
-                flex-direction: row;
-            }
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
         }
 
-        .animate-bounce {
-            animation: bounce 1s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-0.5rem); }
-        }
-
-        .hidden {
-            display: none !important;
+        /* Loading indicator */
+        .bg-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
+
+<div class="bg-canvas" id="bg-canvas">
+    <div class="bg-layer active" id="bg-ggb">
+        <div class="ggb-container">
+            <canvas id="ggb-canvas"></canvas>
+        </div>
+    </div>
+    <div class="bg-layer" id="bg-sf-1"></div>
+    <div class="bg-layer" id="bg-sf-2"></div>
+    <div class="bg-layer" id="bg-sj-1"></div>
+    <div class="bg-layer" id="bg-sj-2"></div>
+</div>
 
 <nav>
     <div class="nav-content">
@@ -629,24 +642,12 @@
 
 <section class="hero-section">
     <div class="hero-content">
-        <div class="hero-badge">San Jose • Restaurants & Bars</div>
-        
-        <h1 class="hero-h1">
-            Digital Presence<br/>
-            <span style="color: rgb(100, 116, 139); font-weight: 300;">That Converts</span>
-        </h1>
-
-        <p class="hero-p">
-            We build websites, manage POS integrations, and create marketing that drives real results for San Jose restaurants and bars.
-        </p>
-
+        <div class="hero-badge">For Bay Area Restaurants & Bars</div>
+        <h1 class="hero-h1">Digital That Drives Real Orders</h1>
+        <p class="hero-p">Web design, POS systems, branding, and marketing that gets your San Jose restaurant noticed online and through the door.</p>
         <div class="button-group">
-            <button class="btn-primary">Start Your Project</button>
-            <button class="btn-secondary">See Our Work</button>
-        </div>
-
-        <div style="display: flex; justify-content: center; margin-top: 4rem;">
-            <div style="color: rgb(100, 116, 139); animation: bounce 1s infinite; font-size: 1.5rem;">↓</div>
+            <button class="btn-primary">Get Started</button>
+            <button class="btn-secondary">Schedule a Call</button>
         </div>
     </div>
 </section>
@@ -654,40 +655,41 @@
 <section id="services" class="services-section">
     <div class="section-container">
         <div style="margin-bottom: 5rem;">
-            <h2 class="section-title">What We Do</h2>
+            <h2 class="section-title">Services Built For Hospitality</h2>
             <div class="section-line"></div>
+            <p class="section-subtitle">We combine design, technology, and marketing to solve the problems keeping your restaurant small</p>
         </div>
 
         <div class="services-grid">
             <div class="service-card">
                 <div class="service-icon">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4m0 6V4m0 0H8m0 0v8"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20H4V4h16v8"></path>
                     </svg>
                 </div>
-                <h3 class="service-title">Website Design & Development</h3>
-                <p class="service-desc">Custom-built sites for restaurants and bars. Fast, mobile-optimized, designed to convert visitors into customers.</p>
+                <h3 class="service-title">Web Design & Development</h3>
+                <p class="service-desc">Fast, beautiful websites with menus, online ordering, and reservation systems that make customers want to visit.</p>
                 <div class="service-details">
+                    <div class="service-detail-item"><div class="service-detail-dot"></div>Responsive design</div>
                     <div class="service-detail-item"><div class="service-detail-dot"></div>Menu integration</div>
-                    <div class="service-detail-item"><div class="service-detail-dot"></div>Reservation systems</div>
-                    <div class="service-detail-item"><div class="service-detail-dot"></div>Mobile-first design</div>
-                    <div class="service-detail-item"><div class="service-detail-dot"></div>SEO optimization</div>
+                    <div class="service-detail-item"><div class="service-detail-dot"></div>Mobile ordering</div>
+                    <div class="service-detail-item"><div class="service-detail-dot"></div>Fast loading</div>
                 </div>
             </div>
 
             <div class="service-card">
                 <div class="service-icon">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                     </svg>
                 </div>
-                <h3 class="service-title">POS & Delivery Integration</h3>
-                <p class="service-desc">Seamless setup and troubleshooting with Clover, DoorDash, and UberEats. We keep your systems synced.</p>
+                <h3 class="service-title">POS & Payment Integration</h3>
+                <p class="service-desc">Seamless connections between your website, DoorDash, UberEats, Square, and Toast. One system, multiple channels.</p>
                 <div class="service-details">
-                    <div class="service-detail-item"><div class="service-detail-dot"></div>Clover POS setup</div>
-                    <div class="service-detail-item"><div class="service-detail-dot"></div>DoorDash integration</div>
-                    <div class="service-detail-item"><div class="service-detail-dot"></div>UberEats sync</div>
-                    <div class="service-detail-item"><div class="service-detail-dot"></div>Modifier management</div>
+                    <div class="service-detail-item"><div class="service-detail-dot"></div>Square setup</div>
+                    <div class="service-detail-item"><div class="service-detail-dot"></div>Multi-channel sync</div>
+                    <div class="service-detail-item"><div class="service-detail-dot"></div>Real-time inventory</div>
+                    <div class="service-detail-item"><div class="service-detail-dot"></div>Delivery platform API</div>
                 </div>
             </div>
 
@@ -835,6 +837,9 @@
 </footer>
 
 <script>
+// ============================================
+// PORTFOLIO DATA & RENDERING
+// ============================================
 const portfolio = [
     {
         id: 1,
@@ -910,7 +915,6 @@ function renderPortfolio() {
         </div>
     `).join('');
 
-    // Add click listeners to toggle buttons
     document.querySelectorAll('.portfolio-toggle').forEach(button => {
         button.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -920,7 +924,6 @@ function renderPortfolio() {
         });
     });
 
-    // Add click listeners to cards
     document.querySelectorAll('.portfolio-card').forEach(card => {
         card.addEventListener('click', () => {
             const id = parseInt(card.dataset.id);
@@ -930,8 +933,227 @@ function renderPortfolio() {
     });
 }
 
-// Initial render
 renderPortfolio();
+
+// ============================================
+// GOLDEN GATE BRIDGE ANIMATION
+// ============================================
+function drawGoldenGateBridge(canvas, progress = 0) {
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Clear canvas with gradient sky
+    const skyGradient = ctx.createLinearGradient(0, 0, 0, height);
+    skyGradient.addColorStop(0, '#87CEEB');
+    skyGradient.addColorStop(1, '#E0F6FF');
+    ctx.fillStyle = skyGradient;
+    ctx.fillRect(0, 0, width, height);
+    
+    // Water with wave animation
+    ctx.fillStyle = '#1E90FF';
+    ctx.beginPath();
+    ctx.moveTo(0, height * 0.65);
+    for (let i = 0; i < width; i += 5) {
+        const waveY = height * 0.65 + Math.sin((i * 0.01) + progress) * 8;
+        ctx.lineTo(i, waveY);
+    }
+    ctx.lineTo(width, height);
+    ctx.lineTo(0, height);
+    ctx.fill();
+    
+    // Bridge cables
+    ctx.strokeStyle = 'rgba(200, 100, 50, 0.7)';
+    ctx.lineWidth = 3;
+    const tower1X = width * 0.25;
+    const tower2X = width * 0.75;
+    const towerHeight = height * 0.35;
+    
+    // Left cable
+    ctx.beginPath();
+    ctx.moveTo(0, height * 0.6);
+    ctx.quadraticCurveTo(tower1X, towerHeight - 20, width, height * 0.6);
+    ctx.stroke();
+    
+    // Right cable
+    ctx.beginPath();
+    ctx.moveTo(0, height * 0.6);
+    ctx.quadraticCurveTo(tower2X, towerHeight - 20, width, height * 0.6);
+    ctx.stroke();
+    
+    // Bridge deck
+    ctx.fillStyle = 'rgba(200, 100, 50, 0.8)';
+    ctx.fillRect(0, height * 0.6, width, 15);
+    
+    // Towers
+    ctx.fillStyle = 'rgba(200, 100, 50, 0.9)';
+    ctx.fillRect(tower1X - 8, towerHeight, 16, height * 0.25);
+    ctx.fillRect(tower2X - 8, towerHeight, 16, height * 0.25);
+    
+    // Tower tops (peaks)
+    ctx.fillStyle = 'rgba(220, 120, 70, 1)';
+    ctx.beginPath();
+    ctx.moveTo(tower1X, towerHeight - 30);
+    ctx.lineTo(tower1X - 12, towerHeight);
+    ctx.lineTo(tower1X + 12, towerHeight);
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.moveTo(tower2X, towerHeight - 30);
+    ctx.lineTo(tower2X - 12, towerHeight);
+    ctx.lineTo(tower2X + 12, towerHeight);
+    ctx.fill();
+    
+    // Suspension cables (vertical lines)
+    ctx.strokeStyle = 'rgba(180, 80, 40, 0.5)';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < width; i += 30) {
+        ctx.beginPath();
+        ctx.moveTo(i, height * 0.55);
+        ctx.lineTo(i, height * 0.63);
+        ctx.stroke();
+    }
+}
+
+function animateBridge() {
+    const canvas = document.getElementById('ggb-canvas');
+    if (!canvas) return;
+    
+    canvas.width = Math.min(800, window.innerWidth * 0.9);
+    canvas.height = canvas.width * 0.75;
+    
+    let progress = 0;
+    function animate() {
+        progress += 0.02;
+        drawGoldenGateBridge(canvas, progress);
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+// ============================================
+// BACKGROUND IMAGE MANAGEMENT
+// ============================================
+const backgroundImages = [
+    {
+        id: 'bg-sf-1',
+        urls: [
+            'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1551632786-de41ec6a05ae?w=1200&h=600&fit=crop'
+        ],
+        name: 'San Francisco Golden Gate'
+    },
+    {
+        id: 'bg-sf-2',
+        urls: [
+            'https://images.unsplash.com/photo-1537225228614-b4fad34a0b60?w=1200&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=600&fit=crop'
+        ],
+        name: 'San Francisco Skyline'
+    },
+    {
+        id: 'bg-sj-1',
+        urls: [
+            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1489749798305-4fea3ba63d60?w=1200&h=600&fit=crop'
+        ],
+        name: 'San Jose Downtown'
+    },
+    {
+        id: 'bg-sj-2',
+        urls: [
+            'https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=1200&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1200&h=600&fit=crop'
+        ],
+        name: 'Bay Area Sunset'
+    }
+];
+
+// Preload images
+function preloadImage(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = resolve;
+        img.onerror = reject;
+    });
+}
+
+async function initializeBackgrounds() {
+    for (const bg of backgroundImages) {
+        const randomUrl = bg.urls[Math.floor(Math.random() * bg.urls.length)];
+        const element = document.getElementById(bg.id);
+        if (element) {
+            element.style.backgroundImage = `url('${randomUrl}')`;
+            try {
+                await preloadImage(randomUrl);
+            } catch (e) {
+                console.warn(`Failed to load image for ${bg.id}:`, randomUrl);
+            }
+        }
+    }
+}
+
+// ============================================
+// SCROLL-TRIGGERED BACKGROUND CYCLING
+// ============================================
+const bgLayers = ['bg-ggb', 'bg-sf-1', 'bg-sf-2', 'bg-sj-1', 'bg-sj-2'];
+let currentBgIndex = 0;
+
+function updateBackgroundOnScroll() {
+    const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    const newIndex = Math.floor(scrollPercent * (bgLayers.length - 1));
+    
+    if (newIndex !== currentBgIndex && newIndex < bgLayers.length) {
+        // Fade out current
+        const currentElement = document.getElementById(bgLayers[currentBgIndex]);
+        if (currentElement) {
+            currentElement.classList.remove('active');
+        }
+        
+        // Fade in new
+        currentBgIndex = newIndex;
+        const newElement = document.getElementById(bgLayers[currentBgIndex]);
+        if (newElement) {
+            newElement.classList.add('active');
+        }
+    }
+}
+
+// ============================================
+// PARALLAX EFFECT
+// ============================================
+function updateParallax() {
+    const bgCanvas = document.getElementById('bg-canvas');
+    if (bgCanvas) {
+        const scrolled = window.scrollY;
+        bgCanvas.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+}
+
+// ============================================
+// EVENT LISTENERS & INITIALIZATION
+// ============================================
+window.addEventListener('scroll', () => {
+    updateBackgroundOnScroll();
+    updateParallax();
+});
+
+window.addEventListener('load', () => {
+    animateBridge();
+    initializeBackgrounds();
+});
+
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        animateBridge();
+        initializeBackgrounds();
+    });
+} else {
+    animateBridge();
+    initializeBackgrounds();
+}
 </script>
 
 </body>
