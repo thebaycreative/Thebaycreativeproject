@@ -16,6 +16,7 @@
             color: rgb(15, 23, 42);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -29,16 +30,15 @@
         .tracking-wide { letter-spacing: 0.05em; }
         .tracking-widest { letter-spacing: 0.1em; }
 
-        /* Background Canvas System */
+        /* ===== BACKGROUND SYSTEM ===== */
         .bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            z-index: 0;
+            z-index: 1;
             overflow: hidden;
-            background: #ffffff;
         }
 
         .bg-layer {
@@ -46,22 +46,29 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            z-index: 0;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+
+        /* First background ACTIVE by default */
+        #bg-hero {
+            opacity: 1;
+            z-index: 2;
         }
 
         .bg-layer.active {
             opacity: 1;
-            z-index: 1;
+            z-index: 2;
         }
 
-        /* Gradient fallbacks for each layer */
-        #bg-ggb {
+        /* Gradient fallbacks */
+        #bg-hero {
             background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
         }
 
@@ -81,6 +88,10 @@
             background: linear-gradient(135deg, #D4A574 0%, #E8B86D 100%);
         }
 
+        #bg-footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
         .ggb-container {
             position: absolute;
             width: 100%;
@@ -88,11 +99,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1;
         }
 
         #ggb-canvas {
-            max-width: 800px;
-            max-height: 600px;
+            max-width: 90%;
+            max-height: 90%;
+            display: block;
         }
 
         /* Navigation */
@@ -103,7 +116,7 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(4px);
             border-bottom: 1px solid rgb(226, 232, 240);
-            z-index: 50;
+            z-index: 100;
         }
 
         .nav-content {
@@ -144,7 +157,13 @@
             color: rgb(71, 85, 105);
         }
 
-        /* Hero */
+        /* ===== CONTENT SECTIONS (on top of background) ===== */
+        section {
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -153,23 +172,19 @@
             padding-top: 5rem;
             padding-left: 1rem;
             padding-right: 1rem;
-            position: relative;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(2px);
+            background: rgba(255, 255, 255, 0.85);
         }
 
         .hero-content {
             max-width: 56rem;
             text-align: center;
-            z-index: 10;
         }
 
         .hero-badge {
             display: inline-block;
             margin-bottom: 2rem;
             padding: 0.5rem 0.75rem;
-            background-color: rgba(241, 245, 250, 0.9);
+            background-color: rgba(241, 245, 250, 0.95);
             font-size: 0.75rem;
             font-weight: 300;
             letter-spacing: 0.1em;
@@ -240,13 +255,6 @@
             background: rgb(248, 250, 252);
         }
 
-        /* Sections */
-        section {
-            width: 100%;
-            position: relative;
-            z-index: 10;
-        }
-
         .services-section {
             padding: 6rem 1rem;
             background: white;
@@ -260,6 +268,18 @@
         .process-section {
             padding: 6rem 1rem;
             background: white;
+        }
+
+        .cta-section {
+            padding: 6rem 1rem;
+            background: rgb(15, 23, 42);
+            color: white;
+        }
+
+        .footer {
+            background: rgb(17, 24, 39);
+            color: rgb(209, 213, 219);
+            padding: 4rem 1rem 2rem;
         }
 
         .section-container {
@@ -286,7 +306,6 @@
             font-weight: 300;
         }
 
-        /* Services Grid */
         .services-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -361,8 +380,6 @@
             background: rgb(148, 163, 184);
             border-radius: 50%;
         }
-
-
 
         .portfolio-grid {
             display: grid;
@@ -487,12 +504,6 @@
             transform: translateX(2px);
         }
 
-        /* Process */
-        .process-section {
-            padding: 6rem 1rem;
-            background: white;
-        }
-
         .process-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -531,13 +542,6 @@
             line-height: 1.6;
         }
 
-        /* CTA */
-        .cta-section {
-            padding: 6rem 1rem;
-            background: rgb(15, 23, 42);
-            color: white;
-        }
-
         .cta-container {
             max-width: 800px;
             margin: 0 auto;
@@ -574,13 +578,6 @@
 
         .btn-cta-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Footer */
-        .footer {
-            background: rgb(17, 24, 39);
-            color: rgb(209, 213, 219);
-            padding: 4rem 1rem 2rem;
         }
 
         .footer-container {
@@ -641,23 +638,12 @@
         .footer-bottom p {
             margin-bottom: 0.5rem;
         }
-
-        /* Loading indicator */
-        .bg-loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
-            z-index: 1;
-        }
     </style>
 </head>
 <body>
 
 <div class="bg-canvas" id="bg-canvas">
-    <div class="bg-layer active" id="bg-ggb">
+    <div class="bg-layer active" id="bg-hero">
         <div class="ggb-container">
             <canvas id="ggb-canvas"></canvas>
         </div>
@@ -666,6 +652,7 @@
     <div class="bg-layer" id="bg-sf-2"></div>
     <div class="bg-layer" id="bg-sj-1"></div>
     <div class="bg-layer" id="bg-sj-2"></div>
+    <div class="bg-layer" id="bg-footer"></div>
 </div>
 
 <nav>
@@ -975,21 +962,21 @@ function renderPortfolio() {
 renderPortfolio();
 
 // ============================================
-// GOLDEN GATE BRIDGE ANIMATION
+// GOLDEN GATE BRIDGE CANVAS
 // ============================================
 function drawGoldenGateBridge(canvas, progress = 0) {
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
     
-    // Clear canvas with gradient sky
+    // Sky gradient
     const skyGradient = ctx.createLinearGradient(0, 0, 0, height);
     skyGradient.addColorStop(0, '#87CEEB');
     skyGradient.addColorStop(1, '#E0F6FF');
     ctx.fillStyle = skyGradient;
     ctx.fillRect(0, 0, width, height);
     
-    // Water with wave animation
+    // Water with waves
     ctx.fillStyle = '#1E90FF';
     ctx.beginPath();
     ctx.moveTo(0, height * 0.65);
@@ -1001,26 +988,26 @@ function drawGoldenGateBridge(canvas, progress = 0) {
     ctx.lineTo(0, height);
     ctx.fill();
     
-    // Bridge cables
-    ctx.strokeStyle = 'rgba(200, 100, 50, 0.7)';
-    ctx.lineWidth = 3;
+    // Bridge structure
     const tower1X = width * 0.25;
     const tower2X = width * 0.75;
     const towerHeight = height * 0.35;
     
-    // Left cable
+    // Cables
+    ctx.strokeStyle = 'rgba(200, 100, 50, 0.7)';
+    ctx.lineWidth = 3;
+    
     ctx.beginPath();
     ctx.moveTo(0, height * 0.6);
     ctx.quadraticCurveTo(tower1X, towerHeight - 20, width, height * 0.6);
     ctx.stroke();
     
-    // Right cable
     ctx.beginPath();
     ctx.moveTo(0, height * 0.6);
     ctx.quadraticCurveTo(tower2X, towerHeight - 20, width, height * 0.6);
     ctx.stroke();
     
-    // Bridge deck
+    // Deck
     ctx.fillStyle = 'rgba(200, 100, 50, 0.8)';
     ctx.fillRect(0, height * 0.6, width, 15);
     
@@ -1029,7 +1016,7 @@ function drawGoldenGateBridge(canvas, progress = 0) {
     ctx.fillRect(tower1X - 8, towerHeight, 16, height * 0.25);
     ctx.fillRect(tower2X - 8, towerHeight, 16, height * 0.25);
     
-    // Tower tops (peaks)
+    // Tower peaks
     ctx.fillStyle = 'rgba(220, 120, 70, 1)';
     ctx.beginPath();
     ctx.moveTo(tower1X, towerHeight - 30);
@@ -1043,7 +1030,7 @@ function drawGoldenGateBridge(canvas, progress = 0) {
     ctx.lineTo(tower2X + 12, towerHeight);
     ctx.fill();
     
-    // Suspension cables (vertical lines)
+    // Suspension cables
     ctx.strokeStyle = 'rgba(180, 80, 40, 0.5)';
     ctx.lineWidth = 2;
     for (let i = 0; i < width; i += 30) {
@@ -1071,138 +1058,82 @@ function animateBridge() {
 }
 
 // ============================================
-// BACKGROUND IMAGE MANAGEMENT
+// BACKGROUND IMAGE LOADING
 // ============================================
 const backgroundImages = [
     {
         id: 'bg-sf-1',
-        urls: [
-            './Images/br2.jpg',
-            'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1400&h=700&fit=crop'
-        ],
+        urls: ['./images/sf-golden-gate-1.jpg', './images/sf-golden-gate-2.jpg'],
         name: 'San Francisco Golden Gate'
     },
     {
         id: 'bg-sf-2',
-        urls: [
-            'https://images.unsplash.com/photo-1530474409940-b632073bd3cd?w=1400&h=700&fit=crop',
-            'https://images.unsplash.com/photo-1462226185464-4a424f9fa280?w=1400&h=700&fit=crop'
-        ],
+        urls: ['./images/sf-skyline-1.jpg', './images/sf-skyline-2.jpg'],
         name: 'San Francisco Skyline'
     },
     {
         id: 'bg-sj-1',
-        urls: [
-            'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1400&h=700&fit=crop',
-            'https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=1400&h=700&fit=crop'
-        ],
+        urls: ['./images/sj-downtown-1.jpg', './images/sj-downtown-2.jpg'],
         name: 'San Jose Downtown'
     },
     {
         id: 'bg-sj-2',
-        urls: [
-            'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1400&h=700&fit=crop',
-            'https://images.unsplash.com/photo-1500595046891-02a37fb4dcc4?w=1400&h=700&fit=crop'
-        ],
+        urls: ['./images/bay-sunset-1.jpg', './images/bay-sunset-2.jpg'],
         name: 'Bay Area Sunset'
     }
 ];
 
-// Preload images with CORS support
-function preloadImage(url) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.src = url;
-        img.onload = () => {
-            console.log('✓ Image loaded:', url);
-            resolve();
-        };
-        img.onerror = () => {
-            console.warn('✗ Failed to load:', url);
-            reject(new Error('Image load failed'));
-        };
-    });
-}
-
 async function initializeBackgrounds() {
-    console.log('🎨 Initializing background images...');
+    console.log('🎨 Initializing backgrounds...');
     for (const bg of backgroundImages) {
         const randomUrl = bg.urls[Math.floor(Math.random() * bg.urls.length)];
         const element = document.getElementById(bg.id);
         if (element) {
-            // Apply image directly
-            element.style.backgroundImage = `url("${randomUrl}")`;
-            element.style.backgroundSize = 'cover';
-            element.style.backgroundPosition = 'center';
-            element.style.backgroundRepeat = 'no-repeat';
-            
-            console.log(`📦 Setting background for ${bg.id}`);
-            
-            // Try to preload but don't block if it fails
-            try {
-                await preloadImage(randomUrl);
-            } catch (e) {
-                console.warn(`⚠️ Image may not have loaded for ${bg.id}, using fallback color`);
-            }
+            element.style.backgroundImage = `url('${randomUrl}')`;
+            console.log(`📦 Loaded: ${bg.id}`);
         }
     }
-    console.log('✅ Background initialization complete');
+    console.log('✅ Done!');
 }
 
 // ============================================
-// SCROLL-TRIGGERED BACKGROUND CYCLING
+// SCROLL BACKGROUND CYCLING
 // ============================================
-const bgLayers = ['bg-ggb', 'bg-sf-1', 'bg-sf-2', 'bg-sj-1', 'bg-sj-2'];
+const bgLayers = ['bg-hero', 'bg-sf-1', 'bg-sf-2', 'bg-sj-1', 'bg-sj-2', 'bg-footer'];
 let currentBgIndex = 0;
 
 function updateBackgroundOnScroll() {
     const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    // Smooth progression through all backgrounds
-    const newIndex = Math.round(Math.min(scrollPercent * bgLayers.length, bgLayers.length - 1));
+    const newIndex = Math.round(Math.min(scrollPercent * (bgLayers.length - 1), bgLayers.length - 1));
     
     if (newIndex !== currentBgIndex) {
-        // Remove active class from all
-        bgLayers.forEach(layerId => {
-            const el = document.getElementById(layerId);
+        // Remove active from all
+        bgLayers.forEach(id => {
+            const el = document.getElementById(id);
             if (el) el.classList.remove('active');
         });
         
-        // Add active class to new
+        // Add active to new
         currentBgIndex = newIndex;
-        const newElement = document.getElementById(bgLayers[currentBgIndex]);
-        if (newElement) {
-            newElement.classList.add('active');
-            console.log(`📸 Switched to background: ${bgLayers[currentBgIndex]}`);
+        const el = document.getElementById(bgLayers[currentBgIndex]);
+        if (el) {
+            el.classList.add('active');
+            console.log(`🎨 Background: ${bgLayers[currentBgIndex]}`);
         }
     }
 }
 
 // ============================================
-// PARALLAX EFFECT
+// EVENT LISTENERS
 // ============================================
-function updateParallax() {
-    const bgCanvas = document.getElementById('bg-canvas');
-    if (bgCanvas) {
-        const scrolled = window.scrollY;
-        bgCanvas.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-}
+window.addEventListener('scroll', updateBackgroundOnScroll);
 
-// ============================================
-// EVENT LISTENERS & INITIALIZATION
-// ============================================
-window.addEventListener('scroll', () => {
-    updateBackgroundOnScroll();
-    updateParallax();
-});
-
+// Initialize
 window.addEventListener('load', () => {
     animateBridge();
     initializeBackgrounds();
 });
 
-// Initialize on DOM ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         animateBridge();
